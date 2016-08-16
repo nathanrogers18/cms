@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
-from django.contrib.auth import authenticate, login
-from django.contrib.auth import logout
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from .models import *
 
 
@@ -18,21 +20,24 @@ def user(request, user_id):
     return render(request, 'forum/user.html', context)
 
 
-def login(request):
+def login_view(request):
     if request.POST:
-
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
 
         if user is not None:
             login(request, user)
+            print('login success!')
             # Redirect to a success page.
+            return HttpResponseRedirect(reverse('forum:index'))
         else:
             print("invalid login")
         # Return an 'invalid login' error message.
-    return render(request, 'forum/login.html', context)
 
+    return render(request, 'forum/login_view.html')
 
-def logout(request):
+@login_required
+def logout_view(request):
     logout(request)
+    return HttpResponseRedirect('forum:index')

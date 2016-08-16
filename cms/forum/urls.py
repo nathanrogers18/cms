@@ -8,7 +8,7 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
 
     url(r'^(?P<user_id>[0-9]+)/$', views.user, name='user'),
-    url(r'^login/', views.login, name='login'),
+    url(r'^login/', views.login_view, name='login_view'),
 
 
 ]
