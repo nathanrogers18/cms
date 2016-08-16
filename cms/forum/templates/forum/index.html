@@ -6,7 +6,8 @@
         {% for post in posts %}
             <li>
 
-                {{ post }}
+                {{ post.user }} said on {{ post.time_created}}:<br/>
+                {{ post.post_text}}
             </li>
         {% endfor %}
         </ul>
